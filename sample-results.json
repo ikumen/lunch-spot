@@ -1,0 +1,39 @@
+{u'region': 
+    {u'center': {
+        u'latitude': 34.049001, 
+        u'longitude': -118.258732}}, 
+u'total': 272, 
+u'businesses': [
+    {u'rating': 4.0, 
+    u'review_count': 1980, 
+    u'name': u'Cafe Dulce', 
+    u'transactions': [], 
+    u'url': u'https://www.yelp.com/biz/cafe-dulce-los-angeles?adjust_creative=FvYce7is7TqkVlblZNUxEg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=FvYce7is7TqkVlblZNUxEg', 
+    u'price': u'$', 
+    u'distance': 1691.4553666882218, 
+    u'coordinates': {
+        u'latitude': 34.048899, 
+        u'longitude': -118.2397866}, 
+    u'alias': u'cafe-dulce-los-angeles', 
+    u'image_url': u'https://s3-media3.fl.yelpcdn.com/bphoto/B_atHADaHhY7YrRz0_08dg/o.jpg', 
+    u'categories': [
+        {u'alias': u'coffee', u'title': u'Coffee & Tea'}, 
+        {u'alias': u'bakeries', u'title': u'Bakeries'}, 
+        {u'alias': u'cafes', u'title': u'Cafes'}], 
+    u'display_phone': u'(213) 346-9910', 
+    u'phone': u'+12133469910', 
+    u'id': u'8rVWoDNS6JO-5uXOD3VyXw', 
+    u'is_closed': False, 
+    u'location':{
+        u'city': u'Los Angeles', 
+        u'display_address': [
+            u'134 Japanese Village Plz', 
+            u'Bldg E', 
+            u'Los Angeles,CA 90012'], 
+        u'country': u'US', 
+        u'address2': u'Bldg E', 
+        u'address3': u'', 
+        u'state': u'CA', 
+        u'address1': u'134 Japanese Village Plz', 
+        u'zip_code': u'90012'}}, 
+]}

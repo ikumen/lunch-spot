@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Lunch Spots!!!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+<body>
+    <h1>Lunch Spots</h1>
+    <div>
+    Choose a category <br />
+    <form action="/food">
+        <input type="hidden" name="lat" value="34.049001" />
+        <input type="hidden" name="lon" value="-118.258732" />
+        <select name=cat>
+        {% for k,v in categories.items() %}
+            <option value="{{k}}">{{v}}</option>        
+        {% endfor %}
+        </select> <br />
+        <select name="price">
+            <option value="1">$</option>
+            <option value="2">$$</option>
+            <option value="3">$$$</option>
+            <option value="4">$$$$</option>
+        </select>
+        <br/>
+        <button type="submit">go</button>
+    </form>
+    </div>
+</body>
+</html>
