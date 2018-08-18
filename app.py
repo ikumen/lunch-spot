@@ -35,7 +35,8 @@ def get_spot():
         limit=2, 
         price=price)
     print(results)
-    spots = [dict(name=r['name'],photo=r['image_url']) for r in results['businesses']]
+    spots = [dict(name=r['name'],photo=r['image_url'],link=r['url']) for r in results['businesses']]
+    print(spots)
     return render_template('food.html', spots=spots)
 
 
