@@ -1,0 +1,56 @@
+body {
+    background-image: url(img/spiration-light.png);
+}
+
+.jumbotron {
+    text-align: center;
+    background-color: #96bdba;
+    margin-top: 50px;
+}
+
+h1 {
+    color: #507983;
+    font-size: 3.5em;
+}
+
+#form {
+    margin-top: 20px;
+}
+
+.btn {
+    border-radius: 50%;
+    border: #507983 solid;
+}
+
+.btn:hover {
+    color: white;
+    background-color: #507983;
+}
+
+/* Results Page */
+
+.card-header {
+    background-color: #96bdba;
+    text-align: center;
+}
+
+#result-card {
+    margin-top: 20px;
+}
+
+#result-body {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
+.btn {
+    text-decoration: none;
+    color: black;
+}
