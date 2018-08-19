@@ -22,8 +22,8 @@
                     <input type="hidden" name="lat" value="34.049001" />
                     <input type="hidden" name="lon" value="-118.258732" />
                     <select name=cat>
-                    {% for k,v in categories.items() %}
-                        <option value="{{k}}">{{v}}</option>        
+                    {% for c in categories %}
+                        <option value="{{c.k}}">{{c.v}}</option>        
                     {% endfor %}
                     </select>
                     <select name="price">

@@ -1,24 +1,67 @@
-from flask import Flask, render_template, request
+import random
+
+from flask import Flask, render_template, request, jsonify
 from yelpapi import YelpAPI
 
 app = Flask(__name__,
             static_folder="../static/dist",
-            template_folder="../static")
-app.config.from_pyfile('local_settings.py')
-yelp = YelpAPI(app.config.get('YELP_API_KEY'))
+            #template_folder="../static"
+            )
 
-# TODO: externalize
-categories = dict(
-    breweries="Breweries",
-    bakeries="Bakeries",
-    farmersmarket="Farmers Market",
-    grocery="Grocery",
-    juicebars="Juice Bars")
+app.config.from_pyfile('default_settings.py', silent=False)            
+app.config.from_pyfile('local_settings.py', silent=True)
+
+yelp = YelpAPI(app.config.get('YELP_API_KEY'))
+categories = app.config.get('RESTAURANT_CATEGORIES')
+required_params = ['price', 'category', 'lat', 'lon', 'radius']
+
+
+@app.route('/api/categories', methods=['get'])
+def api_get_categories():
+    return jsonify(categories)
+
+
+@app.route('/api/spot', methods=['post'])
+def api_get_spot():
+    params = request.get_json()
+
+    if not all (k in params for k in required_params):
+        # TODO: handle
+        pass
+
+    spot = _get_spot(**params)
+    return jsonify(spot)
+
+
+def _get_spot(**params):
+    """Get total number of restaurants that match our query filters, 
+    and randomly return one of those restaurants"""
+    params['limit'] = 1
+    total = _search_yelp(**params)['total']
+
+    if total > 0:
+        # TODO: 
+        pass
+
+    # Yelp has hard limit of 1000 or less biz returned
+    if total > 1000:
+        total = 1000
+
+    selected = random.randint(1, total)-1
+    params['offset'] = selected
+    restaurants = _search_yelp(**params)['businesses']
+
+    return restaurants[0] # Should always return 1 restaurant
+
+
+def _search_yelp(**params):
+    """Search Yelp."""
+    return yelp.search_query(**params)
 
 
 @app.route('/')
 def home():
-    return render_template('index.html', categories=categories)
+    return render_template('home.html', categories=categories)
 
 
 @app.route('/food')
