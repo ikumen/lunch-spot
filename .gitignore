@@ -111,3 +111,7 @@ server/frontend/public/static
 server/frontend/public/manifest.json
 server/frontend/public/asset-manifest.json
 server/frontend/public/favicon.ico
+
+node_modules/
+
+
