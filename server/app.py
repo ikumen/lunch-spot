@@ -5,7 +5,8 @@ from yelpapi import YelpAPI
 
 app = Flask(__name__,
             static_folder="../static/dist",
-            template_folder="../static")
+            #template_folder="../static"
+            )
 
 app.config.from_pyfile('default_settings.py', silent=False)            
 app.config.from_pyfile('local_settings.py', silent=True)
@@ -60,7 +61,7 @@ def _search_yelp(**params):
 
 @app.route('/')
 def home():
-    return render_template('index.html', categories=categories)
+    return render_template('home.html', categories=categories)
 
 
 @app.route('/food')
