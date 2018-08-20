@@ -7,23 +7,21 @@ class SpotDetail extends React.Component {
 
   render() {
     const spot = this.props.spot;
+    const noMatch = this.props.noMatch;
     return (
         <div className="card" id="result-card">
-            {/* <div class="card-header">
-                <h1>Lunch Sp<svg width="50" height="50"><circle cx="25" cy="25" r="20" fill="white" stroke="#507983" stroke-width="4"/></svg>ts
-                </h1>
-            </div> */}
-            {/* style="width: 18rem;" */}
             <div className="card-body" id="result-body">
-                {spot && 
-                <div className="card" >
-                    <img className="card-img-top" src={spot.image_url}/>
-                    <div className="card-body">
-                        {spot.name}
-                        <a className="btn" href={spot.url} target="_new">GO</a>
+                {spot ? (
+                    <div className="card" >
+                        <img className="card-img-top" src={spot.image_url}/>
+                        <div className="card-body">
+                            {spot.name}
+                            <a className="btn" href={spot.url} target="_new">GO</a>
+                        </div>
                     </div>
-                </div>
-                }
+                ):(
+                    <div>{noMatch ? 'No matches were found, please change filter' : ''}</div>                    
+                )}
             </div>
         </div>
     );    
@@ -101,34 +99,43 @@ export default class App extends React.Component {
       super(props);
       this.onFindSpot = this.onFindSpot.bind(this);
       this.state = {
-        spot: undefined
+        spot: undefined,
+        noMatch: false,
       }
     }
   
     onFindSpot(params) {
-      //console.log(params)
-      this.findSpot(params).then(spot => {
-          this.setState({spot: spot})
-      });
+      this.setState({noMatch: false});
+      this.findSpot(params)
+        .then(spot => {this.setState({spot: spot})})
+        .catch(e => {
+            if (e.message === '404') {
+                this.setState({noMatch: true})
+            }
+        })
     }
   
     async findSpot(params) {
-      let resp = await fetch('/api/spot', {
-        method: 'post',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(params)
-      });
-      return await resp.json();
+        let resp = await fetch('/api/spot', {
+            method: 'post',
+            body: JSON.stringify(params),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (resp.ok) 
+            return await resp.json();
+        
+        throw new Error(resp.status);
     }
   
     render() {
       return <div>
         <SearchComponent onFindSpot={this.onFindSpot} />
         <hr/>
-        <SpotDetail spot={this.state.spot} />
+        <SpotDetail spot={this.state.spot} noMatch={this.state.noMatch}/>
       </div>
     }
   }

@@ -31,7 +31,7 @@ def api_get_spot():
 
     query_params = dict(
         price=int(params['price']),
-        category=params['category'],
+        categories=[params['category']],
         latitude=float(params['lat']),
         longitude=float(params['lon']),
         radius=int(params['radius']),
@@ -39,7 +39,13 @@ def api_get_spot():
     )
 
     spot = _get_spot(**query_params)
-    return jsonify(spot)
+
+    if spot:
+        return jsonify(spot)
+    else:
+        resp = jsonify({'message': 'Nothing found, please try another filter!'})
+        resp.status_code = 404
+        return resp
 
 
 def _get_spot(**params):
@@ -47,9 +53,8 @@ def _get_spot(**params):
     and randomly return one of those restaurants"""
     total = _search_yelp(**params)['total']
 
-    if total > 0:
-        # TODO: 
-        pass
+    if total == 0:
+        return None
 
     # Yelp has hard limit of 1000 or less biz returned
     if total > 1000:
