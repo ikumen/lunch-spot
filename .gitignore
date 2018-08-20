@@ -116,3 +116,4 @@ server/frontend/public/favicon.ico
 static/package-lock.json
 .tern-port
 *.*~
+server/templates/*.html
