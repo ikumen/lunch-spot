@@ -5,9 +5,7 @@ from yelpapi import YelpAPI
 
 app = Flask(__name__,
             static_folder="../static/dist",
-            static_url_path="/static",
-            template_folder="../static/dist/html"
-            )
+            static_url_path="")
 
 app.config.from_pyfile('default_settings.py', silent=False)            
 app.config.from_pyfile('local_settings.py', silent=True)
@@ -74,28 +72,8 @@ def _search_yelp(**params):
 
 @app.route('/')
 def home():
-    return render_template('index.html', categories=categories)
+    return app.send_static_file('index.html')
 
-
-@app.route('/food')
-def get_spot():
-    category = request.args.get('cat')
-    price = request.args.get('price')
-    lat = request.args.get('lat')
-    lon = request.args.get('lon')
-
-    if not all([category, price]):
-        # TODO: handle missing args
-        pass
-
-    results = yelp.search_query(
-        latitude=float(lat),
-        longitude=float(lon),
-        categories=[category],
-        limit=2,
-        price=int(price))
-    spots = [dict(name=r['name'],photo=r['image_url'],link=r['url']) for r in results['businesses']]
-    return render_template('food.tpl', spots=spots)
 
 
 if __name__ == '__main__':

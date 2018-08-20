@@ -1,20 +1,14 @@
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
-const htmlPlugin = new HtmlWebPackPlugin({
-	template: "./index.html",
-	filename: "./index.html"
-  
-});
-
 const config = {
     entry: __dirname + '/js/index.jsx',
     output: {
-		path: __dirname + '/dist',
-		filename: 'js/bundle.js',
+			path: __dirname + '/dist',
+			filename: 'js/bundle.js',
     },
     resolve: {
-		extensions: ['.js', '.jsx', '.css']
+			extensions: ['.js', '.jsx', '.css']
     },
     module: {
 		rules: [
@@ -29,8 +23,7 @@ const config = {
 	},
 	plugins: [new HtmlWebPackPlugin({
 		template: "./index.html",
-		inject: false,
-		filename: 'html/index.html'
+		filename: 'index.html'
 	})],
 	devServer: {
 		proxy: {
