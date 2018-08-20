@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from yelpapi import YelpAPI
 
 app = Flask(__name__,
@@ -42,6 +42,13 @@ def get_spot():
     spots = [dict(name=r['name'], photo=r['image_url'])
              for r in results['businesses']]
     return render_template('food.html', spots=spots)
+
+
+@app.route('/hello')
+def get_hello():
+    return jsonify(
+        response="hello"
+    )
 
 
 if __name__ == '__main__':

@@ -4,12 +4,12 @@ var $ = require('jquery');
 
 export default class App extends Component {
     getPythonHello() {
-	$.get('/hello', (data) => {
+	$.get(window.location.href + 'hello', (data) => {
 	    console.log(data);
 	});
     }
 
     render() {
-	return <p onClick={this.getPythonHello}>test</p>;
+	return <p onClick=>test</p>;
     }
 }
