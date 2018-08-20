@@ -5,7 +5,8 @@ from yelpapi import YelpAPI
 
 app = Flask(__name__,
             static_folder="../static/dist",
-            #template_folder="../static"
+            static_url_path="/static",
+            template_folder="../static/dist/html"
             )
 
 app.config.from_pyfile('default_settings.py', silent=False)            
@@ -24,19 +25,26 @@ def api_get_categories():
 @app.route('/api/spot', methods=['post'])
 def api_get_spot():
     params = request.get_json()
-
     if not all (k in params for k in required_params):
         # TODO: handle
         pass
 
-    spot = _get_spot(**params)
+    query_params = dict(
+        price=int(params['price']),
+        category=params['category'],
+        latitude=float(params['lat']),
+        longitude=float(params['lon']),
+        radius=int(params['radius']),
+        limit=1
+    )
+
+    spot = _get_spot(**query_params)
     return jsonify(spot)
 
 
 def _get_spot(**params):
     """Get total number of restaurants that match our query filters, 
     and randomly return one of those restaurants"""
-    params['limit'] = 1
     total = _search_yelp(**params)['total']
 
     if total > 0:
@@ -61,7 +69,7 @@ def _search_yelp(**params):
 
 @app.route('/')
 def home():
-    return render_template('home.html', categories=categories)
+    return render_template('index.html', categories=categories)
 
 
 @app.route('/food')
@@ -80,9 +88,9 @@ def get_spot():
         longitude=float(lon),
         categories=[category],
         limit=2,
-        price=price)
+        price=int(price))
     spots = [dict(name=r['name'],photo=r['image_url'],link=r['url']) for r in results['businesses']]
-    return render_template('food.html', spots=spots)
+    return render_template('food.tpl', spots=spots)
 
 
 if __name__ == '__main__':
